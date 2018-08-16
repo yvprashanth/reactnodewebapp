@@ -21,7 +21,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/api')
+    fetch('/api', {
+      headers: {
+        'Authorization': 'bearer'
+      }
+    })
       .then(res => res.json())
       .then(
         members => {
