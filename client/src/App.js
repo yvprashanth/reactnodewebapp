@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,27 +20,26 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/api', {
+    fetch('/categories', {
+      method: 'GET', // or 'PUT'
       headers: {
-        'Authorization': 'bearer'
+        'Authorization': 'app'
       }
-    })
-      .then(res => res.json())
+    }).then(response => response.json())
       .then(
-        members => {
-          this.setState({ members: members.message });
-        }
+        data => this.setState({ members: data.categories })
       );
   }
 
+
   render() {
+    debugger;
+    const members = this.state;
     return <div className="App">
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="">
-                Rhino
-              </a>
+              <a href="">Rhino</a>
             </Navbar.Brand>
           </Navbar.Header>
           <Nav pullRight>
@@ -68,15 +66,24 @@ class App extends Component {
           </p>
           <p>
             <Button bsStyle="primary">Learn more</Button>
-            <button type="button" class="btn btn-success">
+            <button type="button" className="btn btn-success">
               Success
             </button>
-            <button type="button" class="btn btn-warning">
+          <button type="button" className="btn btn-warning">
               Warning
             </button>
           </p>
         </Jumbotron>
         <p className="App-intro">Prashanth Yerramilli</p>
+        <ul className="no-bullets">
+          {
+            members.map(function(user, i){
+              <li key={i}>
+                {user}
+              </li>
+            })
+          }
+        </ul>
       </div>;
   }
 }
